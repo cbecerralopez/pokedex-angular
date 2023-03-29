@@ -33,6 +33,7 @@
     </div>
   </div>
   <app-pagination
+    class="pagination-container"
     [totalItems]="(pokemons$|async)?.length ?? 0"
     [pageSize]="pageSize"
     [currentPage]="currentPage"
