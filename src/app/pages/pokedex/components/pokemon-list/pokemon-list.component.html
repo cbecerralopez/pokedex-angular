@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="header-container">
+    <h1 class="app-title">Pokédex</h1>
+
+    <input
+      [(ngModel)]="searchText"
+      (ngModelChange)="searchPokemon()"
+      placeholder="Buscar Pokemon"
+    />
+    <button (click)="toggleSortOrder()">Ordenar {{sortOrder === 'asc' ? 'ascendente' : 'descendente'}}</button>
+    <select [(ngModel)]="sortType" (change)="sortPokemons()">
+      <option value="number">Ordenar por número</option>
+      <option value="name">Ordenar alfabéticamente</option>
+    </select>
+  </div>
+  <div class="cards-container">
+    <div
+      class="pokemon-card"
+      *ngFor="
+        let pokemon of pokemons$ |async
+          | slice : (currentPage - 1) * pageSize : currentPage * pageSize;
+        index as i
+      "
+    >
+      <div class="pokemon-card-header">
+        <h3>{{ pokemon.name }}</h3>
+        <p>#{{ pokemon.number }}</p>
+      </div>
+      <img class="pokemon-img" [src]="pokemon.imageUrl" alt="{{ pokemon.name }}"/>
+      <div class="center">
+        <button class="remove-pokemon" (click)="removePokemon(pokemon.number)">Eliminar Pokemon</button>
+      </div>
+    </div>
+  </div>
+  <app-pagination
+    [totalItems]="(pokemons$|async)?.length ?? 0"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+</div>

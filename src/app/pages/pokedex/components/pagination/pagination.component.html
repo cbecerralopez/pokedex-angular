@@ -1,0 +1,11 @@
+<ul class="pagination">
+  <li [class.disabled]="isFirstPage()">
+    <a (click)="previousPage()">&laquo;</a>
+  </li>
+  <li *ngFor="let page of visiblePages" [class.active]="isActivePage(page)">
+    <a (click)="selectPage(page)">{{ page }}</a>
+  </li>
+  <li [class.disabled]="isLastPage()">
+    <a (click)="nextPage()">&raquo;</a>
+  </li>
+</ul>
